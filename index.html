@@ -1,0 +1,87 @@
+➕ Add New Grocery Item
+
+✕
+Item Name  
+Quantity  
+Unit  
+Expiry Date  
+✓ Save Item
+✕ Cancel
+Recipe
+
+✕
+🍳
+Loading…
+
+🛍️ Buy Online
+
+✕
+🛒
+Loading platforms…
+
+🥬
+AI Smart Grocery &
+
+Expiry Management System
+🧶 Pantry  🛒 Shopping  🍳 Recipes  ✨ AI Suggest 📅 Meal Plan  📌 Saved  🌙
+{% if alerts %}
+🚨 {{ alerts|length }} item(s) critical / expired! — {{ alerts | map(attribute='name') | join(', ') }}  ✕
+{% endif %} {% if expiring_soon %}
+⚠️ {{ expiring_soon|length }} item(s) expiring soon! — {{ expiring_soon | map(attribute='name') | join(', ') }} ✕
+{% endif %}
+{{ items|length }}
+Total Items
+{{ alerts|length }}
+Critical / Expired
+{{ expiring_soon|length }}
+Expiring Soon
+{{ items | selectattr('status','eq','good') | list | length }}
+Items Fresh
+🧺 My Inventory  ➕ Add Item  📤 Export CSV
+{% if items %}
+{% for item in items %} {% endfor %}
+Item	Qty	Expiry Date	Days Left	Status	Actions
+{{ item.name }}	{{ item.quantity }} {{ item.unit }}	{{ item.expiry }}	{% if item.days_left < 0 %}Expired {{ item.days_left|abs }} days ago {% else %}{{ item.days_left }} days {% endif %}	{% if item.status == 'expired' %} 💀 Expired {% elif item.status == 'critical' %} 🔴 Critical {% elif item.status == 'warning' %} ⚠️ Soon {% else %} ✅ Good {% endif %}	🗑 Delete
+{% else %}
+🛒
+No grocery items yet. Click Add Item to get started!
+
+{% endif %}
+🍳 Search Recipes
+  🔍 Search  🧺 Use Pantry
+🍽️
+Search for a recipe or use your pantry ingredients.
+
+✨ AI Smart Suggestions
+AI will analyse your pantry and prioritise items expiring soon to suggest practical recipes.
+
+✨ Generate AI Recipe Ideas
+📊 Pantry Health Score
+AI analyses your pantry for nutritional balance across 5 food groups.
+
+🥗 Analyse My Pantry
+📌 Saved Recipes
+{% if saved_recipes %} {% for r in saved_recipes %}
+{% if r.image_url %}  {{ r.title }} {% else %}
+🍽️
+{% endif %}
+{{ r.title }}
+Saved {{ r.saved_at[:10] }}
+🗑
+{% endfor %} {% else %}
+📭
+No saved recipes yet. Search recipes or get AI suggestions and save your favourites!
+
+{% endif %}
+🛒 Shopping List  🛍️ Shop All Online
+
+➕ Add
+📤 Export
+Quick Order via: ⚡ Blinkit 🛵 Instamart 🛒 BigBasket 🚀 Zepto
+Loading...
+
+📅 AI Weekly Meal Plan
+AI creates a personalized 7-day meal plan using your pantry items, prioritising expiring ingredients.
+
+📅 Generate Meal Plan
+🥬 AI Smart Grocery & Expiry Management System • AI-Powered by GPT • Data via TheMealDB
